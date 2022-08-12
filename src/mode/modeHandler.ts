@@ -63,9 +63,7 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
 
   public focusChanged = false;
 
-  private searchDecorationCacheKey:
-    | { searchString: string; documentVersion: number }
-    | undefined;
+  private searchDecorationCacheKey: { searchString: string; documentVersion: number } | undefined;
 
   private readonly disposables: vscode.Disposable[] = [];
   private readonly handlerMap: IModeHandlerMap;
@@ -441,6 +439,18 @@ export class ModeHandler implements vscode.Disposable, IModeHandler {
         ) {
           key = '<copy>';
         }
+      }
+    }
+
+    if (
+      this.vimState.currentMode === Mode.Normal ||
+      this.vimState.currentMode === Mode.Visual ||
+      this.vimState.currentMode === Mode.VisualBlock ||
+      this.vimState.currentMode === Mode.VisualLine
+    ) {
+      if (['H', 'J', 'K', 'L'].includes(key))
+      {
+        key = key.toLowerCase();
       }
     }
 
